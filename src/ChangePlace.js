@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 
 class ChangePlace extends Component {
-  state = {
   
-  }
   render() {
     return (
     <p>
-     console.log ({this.props.books})
+     {this.props.books}
     </p>
   )
   }

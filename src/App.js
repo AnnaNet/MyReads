@@ -5,8 +5,8 @@ import './App.css'
 import ChangePlace from'./ChangePlace'
 
 class BooksApp extends React.Component {
-
   state = {
+    library: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -16,14 +16,18 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
     componentDidMount() {
+
     	BooksAPI.getAll().then((books) => {
-      		this.setState(books: books)
-    	}
-  	)}
+        	console.log (books)
+      		this.setState({
+              library: books
+            })
+    	})
+  	}
   render() {
     return (
       <div className="app">
-        
+
         <ChangePlace books={this.state.books}/>
     
         {this.state.showSearchPage ? (
@@ -180,24 +184,7 @@ class BooksApp extends React.Component {
                           <div className="book-authors">Seuss</div>
                         </div>
                       </li>
-                      <li>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")' }}></div>
-                            <div className="book-shelf-changer">
-                              <select>
-                                <option value="move" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">The Adventures of Tom Sawyer</div>
-                          <div className="book-authors">Mark Twain</div>
-                        </div>
-                      </li>
+
                     </ol>
                   </div>
                 </div>
@@ -212,5 +199,4 @@ class BooksApp extends React.Component {
     )
   }
 }
-
 export default BooksApp
