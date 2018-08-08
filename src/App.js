@@ -1,8 +1,8 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import ListBooks from'./ListBooks'
-import ChangePlace from'./ChangePlace'
+import ListBooks from './ListBooks'
+import ChangePlace from './ChangePlace'
 
 class BooksApp extends React.Component {
   state = {
@@ -41,7 +41,8 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <ChangePlace firstPlace={this.state.firstPlace} secondPlace={this.state.secondPlace} thirdPlace={this.state.thirdPlace}/>
-    	<ListBooks firstPlace={this.state.first}/>
+    	<ListBooks firstPlace={this.state.firstPlace} secondPlace={this.state.secondPlace} thirdPlace={this.state.thirdPlace}/>
+		
 	  </div>
     )
   }
