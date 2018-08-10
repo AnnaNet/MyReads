@@ -39,8 +39,9 @@ class ListBooks extends Component {
         		  <ol className="books-grid">
                 	{(this.props.library.filter((item) => 
         	  	  	  item.shelf === "currentlyReading")).map((book) => (
+
                         <li key={book.id}>
-						  <Select book={book} onChangePlace={this.props.transit}/>
+						  <Select val='currentlyReading' book={book} onChangePlace={this.props.transit}/>
 						</li>
                 	))}
 				  </ol>
@@ -55,7 +56,7 @@ class ListBooks extends Component {
                 	{(this.props.library.filter((item) => 
         	  	  	  item.shelf === "wantToRead")).map((book) => (
                         <li key={book.id}>
-						  <Select book={book} onChangePlace={this.props.transit}/>
+						  <Select val= 'wantToRead' book={book} onChangePlace={this.props.transit}/>
 						</li>
                 	))}
 				  </ol>
@@ -70,7 +71,7 @@ class ListBooks extends Component {
                 	{(this.props.library.filter((item) => 
         	  	  	  item.shelf === "read")).map((book) => (
                         <li key={book.id}>
-						  <Select book={book} onChangePlace={this.props.transit}/>
+						  <Select val='read' book={book} onChangePlace={this.props.transit}/>
 						</li>
                 	))}
 				  </ol>

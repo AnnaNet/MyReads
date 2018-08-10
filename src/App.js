@@ -26,12 +26,13 @@ class BooksApp extends React.Component {
   changePlace = (event, item) => {
     const shelf=event.target.value
     const id=item.id
-    console.log (`id = ${id}`)
     let index=0
-      const newLib = this.state.library.map((book) => {
-      	if (book.id === id) {this.state.library[index].shelf=shelf}
-      	index++
-      })   
+    
+    const newLib = this.state.library.map((book) => {
+      if (book.id === id) {this.state.library[index].shelf=shelf}
+      index++
+    })
+    
     this.setState((state) => {
 	  library: newLib
     })
