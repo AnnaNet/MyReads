@@ -6,9 +6,7 @@ import ListBooks from './ListBooks'
 class BooksApp extends React.Component {
   state = {
     library: [],
-    firstPlace: [],
-    secondPlace: [],
-    thirdPlace: [],
+
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -19,41 +17,30 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      const first = books.filter((item) => 
-        item.shelf === "currentlyReading"
-      )
-      const second = books.filter((item) => 
-        item.shelf === "wantToRead"
-      )
-      const third = books.filter((item) => 
-        item.shelf === "read"
-      )
       this.setState({
         library: books,
-		firstPlace: first,
-        secondPlace: second,
-        thirdPlace: third
       })
    })
   }
 
   changePlace = (event, item) => {
-    item.shelf=event.target.value
-	console.log (event.target.value)
-    this.setState((state) => ({
-      
-	  library: state.library.filter((book) => book.shelf === item.shelf),
-//      secondPlace: state.secondPlace.filter((book) => book.shelf === item.shelf),
-//      thirdPlace: state.thirdPlace.filter((book) => book.shelf === item.shelf)
-    
-    }))
+    const shelf=event.target.value
+    const id=item.id
+    console.log (`id = ${id}`)
+    let index=0
+      const newLib = this.state.library.map((book) => {
+      	if (book.id === id) {this.state.library[index].shelf=shelf}
+      	index++
+      })   
+    this.setState((state) => {
+	  library: newLib
+    })
   }
 
   render() {
     return (
       <div className="app">
-    	<ListBooks library={this.state.library} onChangePlace={this.changePlace}/>
-		
+    	<ListBooks library={this.state.library} transit={this.changePlace}/>
 	  </div>
     )
   }
