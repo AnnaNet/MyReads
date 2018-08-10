@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import Select from './Select'
 
 class ListBooks extends Component {
+
   render() {
 	return (
-      <div className="app"> 
+      <div className="app">
+      
         <div className="search-books">
           <div className="search-books-bar">
             <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
@@ -26,75 +28,47 @@ class ListBooks extends Component {
         </div>
 
         <div className="list-books">
+
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
+
           <div className="list-books-content">
-            <div>
+			{this.props.library.map((book) => (
+              <div>
               <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
+                <h2 className="bookshelf-title">{book.shelf}</h2>
                 <div className="bookshelf-books">
                   <ol className="books-grid">
-		  			{this.props.firstPlace.map((book) => (
+
             		  <li key={book.title}>
                         <div className="book">
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-							<Select/>
+                              	  <div className="book-shelf-changer">
+    	<select onInput={(event) => this.props.onChangePlace(event, book)}>
+      	  <option value="move" disabled>Move to...</option>
+      	  <option value="currentlyReading">Currently Reading</option>
+      	  <option value="wantToRead">Want to Read</option>
+      	  <option value="read">Read</option>
+      	  <option value="none">None</option>
+    	</select>
+     </div>
                           </div>
                           <div className="book-title">{book.title}</div>
                           <div className="book-authors">{book.authors}</div>
                         </div>
                       </li>
-            		))}
                   </ol>
                 </div>
               </div>
-            <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-		  		{this.props.secondPlace.map((book) => (
-            	  <li key={book.title}>
-                    <div className="book">
-                      <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-						<Select/>
-                      </div>
-                      <div className="book-title">{book.title}</div>
-                      <div className="book-authors">{book.authors}</div>
-                    </div>
-                  </li>
-        	    ))}
-              </ol>
-            </div>
-          </div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-		  		{this.props.thirdPlace.map((book) => (
-            	  <li key={book.title}>
-                    <div className="book">
-                      <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-						<Select/>
-                      </div>
-                      <div className="book-title">{book.title}</div>
-                      <div className="book-authors">{book.authors}</div>
-                    </div>
-                  </li>
-            	))}
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
+			</div>
+			))}
+		  </div>
       <div className="open-search">
         <a >Add a book</a>
       </div>
     </div>
-  )}
 </div>
     )
   }

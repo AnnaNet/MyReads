@@ -2,7 +2,6 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import ListBooks from './ListBooks'
-import ChangePlace from './ChangePlace'
 
 class BooksApp extends React.Component {
   state = {
@@ -17,6 +16,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
   }
+
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       const first = books.filter((item) => 
@@ -37,11 +37,22 @@ class BooksApp extends React.Component {
    })
   }
 
+  changePlace = (event, item) => {
+    item.shelf=event.target.value
+	console.log (event.target.value)
+    this.setState((state) => ({
+      
+	  library: state.library.filter((book) => book.shelf === item.shelf),
+//      secondPlace: state.secondPlace.filter((book) => book.shelf === item.shelf),
+//      thirdPlace: state.thirdPlace.filter((book) => book.shelf === item.shelf)
+    
+    }))
+  }
+
   render() {
     return (
       <div className="app">
-        <ChangePlace firstPlace={this.state.firstPlace} secondPlace={this.state.secondPlace} thirdPlace={this.state.thirdPlace}/>
-    	<ListBooks firstPlace={this.state.firstPlace} secondPlace={this.state.secondPlace} thirdPlace={this.state.thirdPlace}/>
+    	<ListBooks library={this.state.library} onChangePlace={this.changePlace}/>
 		
 	  </div>
     )
