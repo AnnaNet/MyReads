@@ -8,6 +8,7 @@ import Search from './Search'
 class BooksApp extends React.Component {
   state = {
     library: [],
+    results: []
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -26,30 +27,79 @@ class BooksApp extends React.Component {
   }
 
   changePlace = (event, item) => {
+    console.log ('new book ' + item)
     const shelf=event.target.value
     const id=item.id
+    console.log (item.title)
     let index=0
+    let flag=true
     
     const newLib = this.state.library.map((book) => {
-      if (book.id === id) {this.state.library[index].shelf=shelf}
+      if (book.id === id) {this.state.library[index].shelf=shelf
+                          flag=false}
       index++
     })
-    
-    this.setState((state) => {
-	  library: newLib
+    index=0
+    if (flag) {
+      const newRes = this.state.results.map((book) => {
+        if (book.id === id) {
+          console.log (index)
+          this.state.results[index].shelf=shelf
+          book.shelf=shelf
+      	  this.setState(state => ({
+          	library: state.library.concat(book)
+      	  }))
+        }
+        index++
+      })
+      console.log (this.state.results)
+      this.setState((state) => {
+        results: newRes
+      })
+    } else {
+      this.setState((state) => {
+	  	library: newLib
+      })
+    }
+  }
+
+  toState = (newBooks) => {
+    newBooks.map((addShelf) => {
+      
+      this.state.library.map((book) => {
+      	if (addShelf.id === book.id) {
+          addShelf.shelf=book.shelf
+      	} else {addShelf.shelf='none'}
+      })
+    })
+	this.setState({
+      results: newBooks
+    })         
+  }
+  
+  error = () => {
+    this.setState({
+      results: []
     })
   }
 
   render() {
     return (
       <div className="app">
-    	<Route exact path='/' render = {() => (
+    	<Route exact path='/' render={() => (
        	  <ListBooks 
        	  	library={this.state.library}
       	    transit={this.changePlace}
 		  />
 		)}/>
-		<Route path='/search' component={Search}/>
+		<Route path='/search' render={() => (
+          <Search
+          	results={this.state.results}
+			toState={this.toState}
+            transit={this.changePlace}
+			error={this.error}
+          />
+		)}/>
 	  </div>
     )
   }

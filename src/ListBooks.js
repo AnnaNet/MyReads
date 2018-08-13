@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Select from './Select'
-//import Search from './Search'
 
 class ListBooks extends Component {
 
@@ -40,7 +39,7 @@ class ListBooks extends Component {
                 	{(this.props.library.filter((item) => 
         	  	  	  item.shelf === "wantToRead")).map((book) => (
                         <li key={book.id}>
-						  <Select val= 'wantToRead' book={book} onChangePlace={this.props.transit}/>
+						  <Select val='wantToRead' book={book} onChangePlace={this.props.transit}/>
 						</li>
                 	))}
 				  </ol>
