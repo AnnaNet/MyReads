@@ -8,7 +8,9 @@ import Search from './Search'
 class BooksApp extends React.Component {
   state = {
     library: [],
-    results: []
+    results: [],
+    lastSearchValue: '',
+    error: ''
 
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -65,11 +67,14 @@ class BooksApp extends React.Component {
 
   toState = (newBooks) => {
     newBooks.map((addShelf) => {
-      
+      addShelf.shelf='none'
+      if (!('imageLinks' in addShelf)) {
+        addShelf.imageLinks='http://via.placeholder.com/128x193?text=BOOK'
+      }
       this.state.library.map((book) => {
       	if (addShelf.id === book.id) {
           addShelf.shelf=book.shelf
-      	} else {addShelf.shelf='none'}
+      	}
       })
     })
 	this.setState({
@@ -77,10 +82,34 @@ class BooksApp extends React.Component {
     })         
   }
   
-  error = () => {
+  error = (state) => {
     this.setState({
-      results: []
+      results: [],
+      error: 'Sorry, no results on this query, try another.'
     })
+  }
+
+  changeSearchValue = (newVal) => {
+    this.setState({
+      lastSearchValue: newVal
+    })
+  }
+
+  clearResults = (state) => {
+    this.setState({
+      results: [],
+      error: ''
+    })
+  }
+
+  clearTextValue = (state) => {
+    this.setState({
+      error: ''
+    })    
+  }
+
+  image = (book) => {
+'http://via.placeholder.com/128x193?text=BOOK'
   }
 
   render() {
@@ -95,9 +124,14 @@ class BooksApp extends React.Component {
 		<Route path='/search' render={() => (
           <Search
           	results={this.state.results}
+			lastSearchValue={this.state.lastSearchValue}
 			toState={this.toState}
             transit={this.changePlace}
 			error={this.error}
+			errorText={this.state.error}
+			changeSearchValue={this.changeSearchValue}
+			clearResults={this.clearResults}
+			clearTextError={this.clearTextValue}
           />
 		)}/>
 	  </div>

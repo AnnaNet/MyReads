@@ -7,7 +7,6 @@ class ListBooks extends Component {
   render() {
 	return (
       <div className="app">
-  
 
         <div className="list-books">
           <div className="list-books-title">
