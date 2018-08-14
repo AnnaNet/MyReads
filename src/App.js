@@ -11,15 +11,9 @@ class BooksApp extends React.Component {
     results: [],
     lastSearchValue: '',
     error: ''
-
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
   }
 
+//TODO: initial get books
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({
@@ -28,6 +22,7 @@ class BooksApp extends React.Component {
    })
   }
 
+//TODO: change shelf
   changePlace = (event, item) => {
     console.log ('new book ' + item)
     const shelf=event.target.value
@@ -45,7 +40,7 @@ class BooksApp extends React.Component {
     if (flag) {
       const newRes = this.state.results.map((book) => {
         if (book.id === id) {
-          console.log (index)
+          //console.log (index)
           this.state.results[index].shelf=shelf
           book.shelf=shelf
       	  this.setState(state => ({
@@ -54,7 +49,7 @@ class BooksApp extends React.Component {
         }
         index++
       })
-      console.log (this.state.results)
+      //console.log (this.state.results)
       this.setState((state) => {
         results: newRes
       })
@@ -65,6 +60,7 @@ class BooksApp extends React.Component {
     }
   }
 
+//TODO: give shelves and image links to results of search
   toState = (newBooks) => {
     newBooks.map((addShelf) => {
       addShelf.shelf='none'
@@ -81,7 +77,8 @@ class BooksApp extends React.Component {
       results: newBooks
     })         
   }
-  
+
+//TODO: clear results of search and set message of error
   error = (state) => {
     this.setState({
       results: [],
@@ -89,12 +86,14 @@ class BooksApp extends React.Component {
     })
   }
 
+//TODO save last value of search
   changeSearchValue = (newVal) => {
     this.setState({
       lastSearchValue: newVal
     })
   }
 
+//TODO clear results of search and delete error message
   clearResults = (state) => {
     this.setState({
       results: [],
@@ -102,14 +101,11 @@ class BooksApp extends React.Component {
     })
   }
 
+//TODO delete error message
   clearTextValue = (state) => {
     this.setState({
       error: ''
     })    
-  }
-
-  image = (book) => {
-'http://via.placeholder.com/128x193?text=BOOK'
   }
 
   render() {
@@ -138,4 +134,5 @@ class BooksApp extends React.Component {
     )
   }
 }
+
 export default BooksApp
